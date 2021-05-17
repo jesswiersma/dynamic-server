@@ -5,7 +5,7 @@ const { UniqueConstraintError } = require("sequelize/lib/errors");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const Admin = require("../models/admin");
-//const validateJWTAdmin = require("../middleware/validate-jwtAdmin");
+const validateJWT = require("../middleware/validate-jwt");
 
 
 ///Test Route///
@@ -103,9 +103,7 @@ Admin Schedule Create - POST
 ===============================
 */ 
 
-//Can't get validateJWTAdmin to work//
-
-router.post("/schedule", async (req, res) => {
+router.post("/schedule", validateJWT, async (req, res) => {
     //console.log("create schedule")
     const {day, date, startTime, endTime, type, location, description} = req.body.schedule;
    
@@ -134,7 +132,7 @@ router.post("/schedule", async (req, res) => {
 ===============================
 */
 
-router.put("/schedule/update/:id", async (req, res) => {
+router.put("/schedule/update/:id", validateJWT, async (req, res) => {
     console.log("edit schedule")
     const {day, date, startTime, endTime, type, location, description} = req.body.schedule;
     const scheduleId = req.params.id;
@@ -168,7 +166,7 @@ router.put("/schedule/update/:id", async (req, res) => {
   Delete a Schedule - DELETE
 ===============================
 */
- router.delete("/schedule/delete/:id", async (req, res) => {
+ router.delete("/schedule/delete/:id", validateJWT, async (req, res) => {
      const scheduleId = req.params.id;
 
      try {
@@ -187,13 +185,13 @@ router.put("/schedule/update/:id", async (req, res) => {
 
 
 
-/* WORKING - without validateJWTAdmin
+/* WORKING 
 ===============================
 Admin Announcement Create - POST
 ===============================
 */ 
 
-router.post("/announcement", async (req, res) => {
+router.post("/announcement", validateJWT, async (req, res) => {
     console.log("create announcement")
     const {title, date, description, response} = req.body.announcement;
    
@@ -218,7 +216,7 @@ router.post("/announcement", async (req, res) => {
 ===============================
 */
 
-router.put("/announcement/update/:id", async (req, res) => {
+router.put("/announcement/update/:id", validateJWT, async (req, res) => {
     console.log("you are here");
     const {title, date, description, response} = req.body.announcement;
     const announcementId = req.params.id;
@@ -249,7 +247,7 @@ router.put("/announcement/update/:id", async (req, res) => {
   Delete an Announcement - DELETE
 ===============================
 */
-router.delete("/announcement/delete/:id", async (req, res) => {
+router.delete("/announcement/delete/:id", validateJWT,async (req, res) => {
     const announcementId = req.params.id;
 
     try {
