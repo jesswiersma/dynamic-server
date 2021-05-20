@@ -4,6 +4,7 @@ const router = Express.Router();
 const {UserModel} = require("../models");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const validateJWT = require("../middleware/validate-jwt");
 
 /*====================
    practice route
@@ -22,7 +23,7 @@ register user route - POST
 ============================*/
 
 router.post("/register", async (req, res ) => {
-    const {firstName, lastName, email, password, organization} = req.body.user;
+    const {firstName, lastName, email, password, organization} = req.body
 
     try{
         const User = await UserModel.create({
@@ -30,13 +31,14 @@ router.post("/register", async (req, res ) => {
         lastName,
         email,
         password: bcrypt.hashSync(password, 13),
-        organization
+        organization,
+        isAdmin: false,
     });
 
     let token = jwt.sign({id: User.id, email: User.email}, process.env.JWT_SECRET, {expiresIn: 60*60*24});
 
     res.status(201).json({
-        message: "User successfully registerd",
+        message: "User successfully registered",
         user: User,
         sessionToken: token
     });
@@ -57,8 +59,21 @@ router.post("/register", async (req, res ) => {
 login user route - POST
 ============================*/
 
+router.get("/", validateJWT, (req, res) => {
+    res.status(200).json({
+      user: {
+        id: req.user.id,
+        email: req.user.email,
+        firstName: req.user.firstName,
+        lastName: req.user.lastName,
+        
+      },
+    });
+  });
+
+
 router.post("/login", async (req, res) => {
-    let {email, password} = req.body.user;
+    let {email, password} = req.body;
 
     try{
     let loginUser = await UserModel.findOne({
@@ -66,6 +81,7 @@ router.post("/login", async (req, res) => {
             email: email,
         },
     });
+    console.log("Here you are")
 
     if(loginUser){
 
@@ -74,12 +90,14 @@ router.post("/login", async (req, res) => {
      if (passwordComparison) {   
 
      let token = jwt.sign({id: loginUser.id}, process.env.JWT_SECRET, {expiresIn: 60*60*24});
-
+    console.log(loginUser.id)
       res.status(200).json({
         user: loginUser,
         message: "User successfully logged in!",
-        sessionToken: token
+        sessionToken: token,
+        
     });
+    console.log("now here")
 } else {
     res.status(401).json({
         message: "Incorrect email or password"

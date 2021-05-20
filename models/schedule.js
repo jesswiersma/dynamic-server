@@ -7,7 +7,7 @@ const Schedule = db.define("schedule", {
         allowNull: false,
     },
     date: {
-        type: DataTypes.DATE,
+        type: DataTypes.STRING,
         allowNull: false,
     },
     startTime: {

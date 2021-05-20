@@ -22,7 +22,11 @@ const User = db.define("user", {
     organization: {
         type: DataTypes.STRING,
         allowNull: false
-    }
+    },
+    isAdmin: {
+        type:DataTypes.BOOLEAN,
+        allowNull: false,
+  },
 });
 
 module.exports = User;

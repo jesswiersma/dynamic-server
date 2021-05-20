@@ -1,6 +1,7 @@
 const Express = require('express');
 const router = Express.Router();
 const {AnnouncementModel} = require("../models");
+const validateJWT = require("../middleware/validate-jwt");
 
 /* WORKING
 ====================
@@ -42,4 +43,5 @@ router.get("/:title", async (req, res) => {
   });
 
 
+  
 module.exports = router;

@@ -1,8 +1,7 @@
 const Express = require("express");
 const router = Express.Router();
 const { ScheduleModel } = require("../models");
-//let validateJWT = require("../middleware/validate-jwt");
-//let validateJWTAdmin = require("../middleware/validate-jwtAdmin");
+let validateJWT = require("../middleware/validate-jwt");
 
 /*
 ====================
@@ -55,5 +54,5 @@ router.get("/:date", async (req, res) => {
     }
   });
 
-
+  
 module.exports = router;

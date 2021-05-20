@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const {AdminModel} = require("../models");
+const {UserModel} = require("../models");
 
 const validateJWT = (req, res, next) => {
     if (req.method === 'OPTIONS') {
@@ -8,13 +8,13 @@ const validateJWT = (req, res, next) => {
       const { authorization } = req.headers;
       const payload = authorization ? jwt.verify(authorization.includes('Bearer') ? authorization.split(' ')[1] : authorization, process.env.JWT_SECRET): undefined;
       if (payload) {
-        AdminModel.findOne({
+        UserModel.findOne({
           where: {
             id: payload.id
           }
         })
-        .then(admin => {
-          req.admin = admin;
+        .then(user => {
+          req.user = user;
           next();
         }).catch(err => {
           console.error(err)
