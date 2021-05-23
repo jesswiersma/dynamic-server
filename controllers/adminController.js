@@ -23,7 +23,7 @@ Admin Schedule Create - POST
 
 router.post("/schedule", validateJWT, async (req, res) => {
     //console.log("create schedule")
-    const {day, date, startTime, endTime, type, location, description} = req.body.schedule;
+    const {day, date, startTime, endTime, type, location, description} = req.body;
    
     const scheduleEntry = {
         day,
@@ -52,7 +52,7 @@ router.post("/schedule", validateJWT, async (req, res) => {
 
 router.put("/schedule/update/:id", validateJWT, async (req, res) => {
     console.log("edit schedule")
-    const {day, date, startTime, endTime, type, location, description} = req.body.schedule;
+    const {day, date, startTime, endTime, type, location, description} = req.body;
     const scheduleId = req.params.id;
    
     const query = {
@@ -136,7 +136,7 @@ router.post("/announcement", validateJWT, async (req, res) => {
 
 router.put("/announcement/update/:id", validateJWT, async (req, res) => {
     console.log("you are here");
-    const {title, date, description, response} = req.body.announcement;
+    const {title, date, description, response} = req.body;
     const announcementId = req.params.id;
 
     const query = {

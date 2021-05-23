@@ -23,11 +23,11 @@ router.get("/", async (req, res) => {
 Get Single Announcement - single item detail view
 ====================
 */
-router.get("/:title", async (req, res) => {
+router.get("/:id", async (req, res) => {
     try {
       const announcement = await AnnouncementModel.findOne({
         where: {
-          title: req.params.title,
+          id: req.params.id,
         },
       });
   

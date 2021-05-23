@@ -11,11 +11,11 @@ const Schedule = db.define("schedule", {
         allowNull: false,
     },
     startTime: {
-        type: DataTypes.TIME,
+        type: DataTypes.STRING,
         allowNull: false,
     },
     endTime: {
-        type: DataTypes.TIME,
+        type: DataTypes.STRING,
         allowNull: false,
     },
     type: {
