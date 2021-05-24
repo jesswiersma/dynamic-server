@@ -19,7 +19,7 @@ app.use("/announcement", controllers.announcementController);
 dbConnection.authenticate()
   .then(() => dbConnection.sync())
   .then(() => {
-      app.listen(proces.env.PORT, () => {
+      app.listen(process.env.PORT, () => {
           console.log(`[Server]: App is listening on ${process.env.PORT}.`);
       });
     })   
