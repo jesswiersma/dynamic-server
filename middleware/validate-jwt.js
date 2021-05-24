@@ -6,7 +6,7 @@ const validateJWT = (req, res, next) => {
       return next();
     } else if (req.headers.authorization && req.headers.authorization.includes('Bearer')) {
       const { authorization } = req.headers;
-      const payload = authorization ? jwt.verify(authorization.includes('Bearer') ? authorization.split(' ')[1] : authorization, process.env.JWT_SECRET): undefined;
+      const payload = authorization ? jwt.verify(token, authorization.includes('Bearer') ? authorization.split(' ')[1] : authorization, process.env.JWT_SECRET): undefined;
       if (payload) {
         UserModel.findOne({
           where: {
