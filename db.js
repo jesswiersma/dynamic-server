@@ -1,5 +1,8 @@
 const Sequelize = require("sequelize").Sequelize;
 
-const sequelize = new Sequelize("postgres://postgres:Elevenfifty@localhost:5432/dynamic-server");
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
+    dialect: "postgres",
+    ssl: process.env.ENVIRONMENT === "production"
+});
 
 module.exports = sequelize;

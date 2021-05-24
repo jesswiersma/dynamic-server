@@ -34,11 +34,11 @@ Get Schedule - single day detail view
 ====================
 */
 
-router.get("/:date", async (req, res) => {
+router.get("/:id", async (req, res) => {
     try {
       const schedule = await ScheduleModel.findAll({
         where: {
-          date: req.params.date,
+          id: req.params.id,
           
         },
       });
